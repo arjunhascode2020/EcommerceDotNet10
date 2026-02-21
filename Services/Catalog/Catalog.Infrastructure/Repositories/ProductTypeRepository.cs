@@ -1,6 +1,7 @@
 ﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
-using Microsoft.Extensions.Configuration;
+using Catalog.Core.Settings;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories
@@ -9,11 +10,12 @@ namespace Catalog.Infrastructure.Repositories
     {
         private readonly IMongoCollection<ProductType> _types;
 
-        public ProductTypeRepository(IConfiguration configuration)
+        public ProductTypeRepository(IOptions<DatabaseSettings> options)
         {
-            var client = new MongoClient(configuration["DatabaseSettings:ConnectionString"]);
-            var database = client.GetDatabase(configuration["DatabaseSettings:DatabaseName"]);
-            _types = database.GetCollection<ProductType>(configuration["DatabaseSettings:TypeCollectionName"]);
+            var settings = options.Value;
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+            _types = database.GetCollection<ProductType>(settings.TypeCollectionName);
         }
         public async Task<ProductType> GetProductTypeByIdAsync(string id)
         {

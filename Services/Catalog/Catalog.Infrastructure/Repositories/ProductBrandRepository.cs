@@ -17,6 +17,19 @@ namespace Catalog.Infrastructure.Repositories
             var database = client.GetDatabase(settings.DatabaseName);
             _brands = database.GetCollection<ProductBrand>(settings.BrandCollectionName);
         }
+
+        public async Task<ProductBrand> CreateBrand(ProductBrand productBrand)
+        {
+            await _brands.InsertOneAsync(productBrand);
+            return productBrand;
+        }
+
+        public async Task<bool> DeleteBrandAsync(string id)
+        {
+            var deleteBrand = await _brands.DeleteOneAsync(id);
+            return deleteBrand.IsAcknowledged && deleteBrand.DeletedCount > 0;
+        }
+
         public async Task<ProductBrand> GetProductBrandByIdAsync(string id)
         {
             return await _brands.Find(x => x.Id == id).FirstOrDefaultAsync();
@@ -25,6 +38,14 @@ namespace Catalog.Infrastructure.Repositories
         public async Task<IEnumerable<ProductBrand>> GetProductBrandsAsync()
         {
             return await _brands.Find(_ => true).ToListAsync();
+        }
+
+        public async Task<bool> UpdateBrand(ProductBrand productBrand)
+        {
+            var updateBrand = await _brands.ReplaceOneAsync(b => b.Id == productBrand.Id, productBrand);
+            return updateBrand
+                .IsAcknowledged &&
+                updateBrand.IsModifiedCountAvailable;
         }
     }
 }

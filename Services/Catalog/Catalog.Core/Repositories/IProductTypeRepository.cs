@@ -6,5 +6,10 @@ namespace Catalog.Core.Repositories
     {
         Task<IEnumerable<ProductType>> GetProductTypesAsync();
         Task<ProductType> GetProductTypeByIdAsync(string id);
+
+        Task<ProductType> CreateProductType(ProductType productType);
+        Task<bool> UpdateProdcutType(ProductType productType);
+
+        Task<bool> Delete(string id);
     }
 }

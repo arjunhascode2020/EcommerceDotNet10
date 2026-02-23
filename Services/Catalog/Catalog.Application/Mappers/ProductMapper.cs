@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.Commands;
+using Catalog.Application.DTOs;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Catalog.Core.Specifications;
@@ -67,6 +68,20 @@ namespace Catalog.Application.Mappers
             };
         }
 
+        public static UpdateProductCommand ToUpdateCommand(this UpdateProductDto updateProductDto, string productId)
+        {
+            return new UpdateProductCommand
+            {
+                Id = productId,
+                Name = updateProductDto.Name,
+                Summary = updateProductDto.Summary,
+                Description = updateProductDto.Description,
+                ImageFile = updateProductDto.ImageFile,
+                BrandId = updateProductDto.BrandId,
+                TypeId = updateProductDto.TypeId,
+                Price = updateProductDto.Price,
+            };
+        }
 
 
     }

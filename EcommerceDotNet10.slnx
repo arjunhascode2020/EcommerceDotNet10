@@ -6,4 +6,6 @@
     <Project Path="Services/Catalog/Catalog.Core/Catalog.Core.csproj" />
     <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/Tests/" />
+  <Folder Name="/Tests/Catalog/" />
 </Solution>

@@ -16,7 +16,7 @@
       },
       "dotnetRunMessages": true,
       "lunchUrl": "swagger",
-      "applicationUrl": "https://localhost:8000;http://localhost:5000"
+      "applicationUrl": "http://localhost:8000;https://localhost:5001"
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",

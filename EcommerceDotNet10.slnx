@@ -12,6 +12,12 @@
     <Project Path="Services/Catalog/Catalog.Core/Catalog.Core.csproj" />
     <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/Services/Discount/">
+    <Project Path="Services/Discount/Discount.API/Discount.API.csproj" Id="2f259c59-87d1-40fe-9ab7-66032498cfc9" />
+    <Project Path="Services/Discount/Discount.Application/Discount.Application.csproj" Id="9c502b53-7f92-46c9-ae6c-feccf0a98563" />
+    <Project Path="Services/Discount/Discount.Core/Discount.Core.csproj" Id="e0ab45f4-f9af-4f04-bb25-aca64b43ed4f" />
+    <Project Path="Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj" Id="86093ffe-f06b-4173-b420-7b5c8694d306" />
+  </Folder>
   <Folder Name="/Tests/" />
   <Folder Name="/Tests/Catalog/">
     <Project Path="Testes/Catalog/Catalog.Application.Tests/Catalog.Application.Tests.csproj" />

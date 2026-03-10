@@ -6,13 +6,14 @@
        decimal TotalPrice
         );
 
-    public record ShoppingCardItemDto(
-        string ProductId,
-        string ProductName,
-        string ImageFile,
-        decimal Price,
-        int Quentity
-        );
+    public record ShoppingCardItemDto
+    {
+        public string ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ImageFile { get; set; }
+        public decimal Price { get; set; }
+        public int Quentity { get; set; }
+    }
 
     public record CreateShoppingCartItemDto(
         string ProductId,

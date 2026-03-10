@@ -12,12 +12,14 @@ namespace Discount.Infrastructure.Settings
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
-            var logger = services.GetRequiredService<ILogger>();
+            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger("DbExtension");
             var databaseSettings = services.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 
             try
             {
                 logger.LogInformation("Discount Db Migration Start......");
+                //  logger.LogInformation($"Connection String :{databaseSettings.ConnectionString}");
                 ApplyMigration(databaseSettings.ConnectionString);
                 logger.LogInformation("Discount Db Migration End......");
             }

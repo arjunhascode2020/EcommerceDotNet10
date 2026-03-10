@@ -1,7 +1,11 @@
+using Basket.Application.GrpcServices;
 using Basket.Application.Handlers;
+using Basket.Application.Settings;
 using Basket.Core.Repositories;
 using Basket.Core.Settings;
 using Basket.Infrastructure.Repositories;
+using Discount.Grpc.Protos;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +17,15 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("CacheSettings"));
+builder.Services.Configure<GrpcSettings>(builder.Configuration.GetSection("GrpcSettings"));
+//Register gRPC client for Discount service
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>((sp, cfg) =>
+{
+    var grpcSettings = sp.GetRequiredService<IOptions<GrpcSettings>>().Value;
+    cfg.Address = new Uri(grpcSettings.DiscountUrl);
+});
+// Register GrpcService
+builder.Services.AddScoped<DiscountGrpcService>();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddSwaggerGen();

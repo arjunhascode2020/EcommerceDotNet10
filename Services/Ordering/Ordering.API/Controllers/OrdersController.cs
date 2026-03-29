@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Ordering.Application.Abstractions;
 using Ordering.Application.Commands;
 using Ordering.Application.DTOs;
-using Ordering.Application.Handlers;
 using Ordering.Application.Mappers;
 using Ordering.Application.Queries;
 namespace Ordering.API.Controllers
@@ -10,24 +10,26 @@ namespace Ordering.API.Controllers
     [Route("api/v1/[controller]/[action]")]
     public class OrdersController : ControllerBase
     {
-        private readonly CreateOrderHandler _createOrderHandler;
-        private readonly UpdateOrderHandler _updateOrderHandler;
-        private readonly GetOrderListHandler _getOrderListHandler;
-        private readonly DeleteOrderHandler _deleteOrderHandler;
+        private readonly ICommandHandler<CreateOrderCommand, int> _createOrderHandler;
+        private readonly ICommandHandler<UpdateOrderCommand, int> _updateOrderHandler;
+        private readonly ICommandHandler<DeleteOrderCommand> _deleteOrderHandler;
+        private readonly IQueryHandler<GetOrderListQuery, List<OrderDto>> _getOrderListHandler;
         private readonly ILogger<OrdersController> _logger;
 
+
+
         public OrdersController(
-            CreateOrderHandler createOrderHandler,
-            UpdateOrderHandler updateOrderHandler,
-            GetOrderListHandler getOrderListHandler,
-            DeleteOrderHandler deleteOrderHandler,
+            ICommandHandler<CreateOrderCommand, int> createOrderHandler,
+            ICommandHandler<UpdateOrderCommand, int> updateOrderHandler,
+            ICommandHandler<DeleteOrderCommand> deleteOrderHandler,
+            IQueryHandler<GetOrderListQuery, List<OrderDto>> getOrderListHandler,
             ILogger<OrdersController> logger
             )
         {
             _createOrderHandler = createOrderHandler;
             _updateOrderHandler = updateOrderHandler;
-            _getOrderListHandler = getOrderListHandler;
             _deleteOrderHandler = deleteOrderHandler;
+            _getOrderListHandler = getOrderListHandler;
             _logger = logger;
         }
 
@@ -36,8 +38,10 @@ namespace Ordering.API.Controllers
         {
             var query = new GetOrderListQuery(userName);
             var orders = await _getOrderListHandler.HandleAsync(query, cancellationToken);
+
             _logger.LogInformation("Retrieved {count} orders for user {userName}", orders.Count, userName);
             return Ok(orders);
+
         }
 
         [HttpPost(Name = "CheckoutOrder")]
@@ -47,6 +51,7 @@ namespace Ordering.API.Controllers
             var orderId = await _createOrderHandler.HandleAsync(command, cancellationToken);
             _logger.LogInformation("Created order for user {userName} & Id :{id}", createOrderDto.UserName, orderId);
             return Ok(orderId);
+
         }
 
         [HttpPut("{id}", Name = "UpdateOrder")]

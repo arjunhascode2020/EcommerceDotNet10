@@ -1,3 +1,4 @@
+using Microsoft.OpenApi;
 using Ordering.API.Extensions;
 using Ordering.Infrastructure.Data;
 
@@ -11,6 +12,16 @@ builder.Services.AddOpenApi();
 
 // add ordering services
 builder.Services.AddOrderingServices(builder.Configuration);
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Ordering Api",
+        Description = "Example API using OpenAPI 3.x"
+    });
+});
+
 var app = builder.Build();
 app.MigrateDatabase<OrderContext>(async (context, services) =>
 {
@@ -23,6 +34,12 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json",
+        "Ordering API v1");
+});
 
 app.UseHttpsRedirection();
 

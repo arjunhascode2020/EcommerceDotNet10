@@ -18,6 +18,12 @@
     <Project Path="Services/Discount/Discount.Core/Discount.Core.csproj" Id="e0ab45f4-f9af-4f04-bb25-aca64b43ed4f" />
     <Project Path="Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj" Id="86093ffe-f06b-4173-b420-7b5c8694d306" />
   </Folder>
+  <Folder Name="/Services/Ordering/">
+    <Project Path="Services/Ordering/Ordering.API/Ordering.API.csproj" Id="92438104-50e5-40b3-8d31-5fba7fe7d795" />
+    <Project Path="Services/Ordering/Ordering.Application/Ordering.Application.csproj" Id="00b4efd3-ea21-4c27-bd61-3a6d0b2c2053" />
+    <Project Path="Services/Ordering/Ordering.Core/Ordering.Core.csproj" Id="867f18de-0cea-40b3-865c-3f49410604cf" />
+    <Project Path="Services/Ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj" Id="7a267150-ec4e-4b12-b1fc-0868e69d7c13" />
+  </Folder>
   <Folder Name="/Tests/" />
   <Folder Name="/Tests/Catalog/">
     <Project Path="Testes/Catalog/Catalog.Application.Tests/Catalog.Application.Tests.csproj" />
